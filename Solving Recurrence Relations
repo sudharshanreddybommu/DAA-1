@@ -1,0 +1,6 @@
+def master_theorem(a, b, k):
+    return f"T(n) = O(n^{k})"
+def substitution_method():
+    return f"T(n) = O(log(n))"
+def iteration_method():
+    return f"T(n) = O(n)"
