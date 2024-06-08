@@ -1,0 +1,103 @@
+1.Fibonacci series
+def fib(n):
+    if n==0:
+        return 0
+    elif n==1:
+        return 1
+    else:
+        return fib(n-1)+fib(n-2)
+n=8
+for i in range(0,n+1):
+    print(fib(i))
+
+
+2.def amstrong(n):
+    temp=n
+    sum=0
+    while temp>0:
+        d=temp%10
+        sum+=d**3
+        temp=temp//10
+    return sum==n
+n=153
+if sum==n:
+    print("armstrong")
+else:
+    print("is not")
+
+3.Gcd of two numbers    
+def gcd(a, b):
+    if b == 0:
+        return a
+    else:
+        return gcd(b,a % b)
+a= 48
+b= 18
+print(gcd(a,b))
+
+4.Maximum number
+array=[23,45,23,23,56]
+print(max(array))
+
+5.Factorial of a number
+def fact(n):
+    if n==0:
+        return 1
+    else:
+        return n*fact(n-1)
+n=5
+print(fact(n))
+
+6.Reverse of a number
+def rev(s):
+     s1=s[::-1]
+     return s1
+s='sravanthi'
+print(rev(s))
+
+7.Print prime numbers
+def CheckPrime(i,num):
+    if num==i:
+        return 0
+    else:
+        if(num%i==0):
+            return 1
+        else:
+            return CheckPrime(i+1,num)
+n=10
+for i in range(2,n+1):
+    if(CheckPrime(2,i)==0):
+        print(i)
+
+8.check prime or not
+
+def prime(n,i=2):
+    if n==2:
+        return True
+    elif n%i==0:
+        return False
+    return prime(n,i+1)
+n=10
+if prime(n):
+    print(n,"is prime number")
+else:
+    print(n,"is not prime number")
+
+9.Check  palindrome or not
+def pal(n):
+    return str(n)==str(n)[::-1]
+n='121'
+if pal(n):
+    print(n,"palindrome")
+else:
+    print(n,"notpalindrome")
+10.copy string
+def copy_string(src, dest=''):
+    if src=='':
+        return dest
+    else:
+        return copy_string(src[1:], dest + src[0])
+source="Hello,World!"
+destination=copy_string(source)
+print("Source string:", source)
+print("Destination string:",destination)
