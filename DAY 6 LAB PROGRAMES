@@ -1,0 +1,362 @@
+79.Finding the maximum and minimum
+    PROGRAM:
+import time 
+ 
+def find_max_min(lst): 
+    start_time = time.time()  # Start time measurement 
+ 
+    maximum = max(lst) 
+    minimum = min(lst) 
+ 
+    end_time = time.time()  # End time measurement     elapsed_time = end_time - start_time 
+ 
+    return maximum, minimum, elapsed_time 
+ 
+# Example usage 
+example_list = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5] 
+max_value, min_value, execution_time = find_max_min(example_list) 
+ 
+print(f"Maximum value: {max_value}") print(f"Minimum value: {min_value}") 
+print(f"Execution time: {execution_time:.10f} seconds") 
+ 
+OUTPUT:- 
+ 
+TIME COMPLEXITY:-O(n) 
+
+80. Merge sort 
+      PROGRAM:
+:- import time 
+ 
+def merge_sort(arr):     if len(arr) > 1: 
+        mid = len(arr) // 2  # Finding the mid of the array         left_half = arr[:mid]  # Dividing the array elements into 2 halves         right_half = arr[mid:] 
+ 
+        merge_sort(left_half)  # Sorting the first half 
+        merge_sort(right_half)  # Sorting the second half 
+ 
+i= j = k = 0 
+ 
+        # Copy data to temp arrays L[] and R[]         while i < len(left_half) and j < len(right_half):             if left_half[i] < right_half[j]: 
+                arr[k] = left_half[i] 
+i+= 1             else:                 arr[k] = right_half[j] 
+j+= 1             k += 1 
+ 
+        # Checking if any element was left         while i < len(left_half):             arr[k] = left_half[i] 
+            i += 1 
+            k += 1 
+ 
+        while j < len(right_half):             arr[k] = right_half[j] 
+j+= 1 
+k+= 1 
+ 
+def find_merge_sort_time(arr): 
+    start_time = time.time()  # Start time measurement 
+ 
+    merge_sort(arr)  # Perform merge sort 
+ 
+    end_time = time.time()  # End time measurement 
+    elapsed_time = end_time - start_time 
+ 
+    return elapsed_time 
+ 
+# Example usage example_list = [12, 11, 13, 5, 6, 7] 
+execution_time = find_merge_sort_time(example_list) print(f"Sorted list: {example_list}") 
+print(f"Execution time: {execution_time:.10f} seconds") 
+ 
+OUTPUT:- 
+ 
+ 
+TIME COMPLEXITY:-O(n log n) 
+
+
+81. Quick sort 
+    PROGRAM:
+     :- import time 
+ 
+def quick_sort(arr):     if len(arr) <= 1:         return arr     else: 
+        pivot = arr[len(arr) // 2]         left = [x for x in arr if x < pivot]         middle = [x for x in arr if x == pivot]         right = [x for x in arr if x > pivot] 
+        return quick_sort(left) + middle + quick_sort(right) 
+ 
+def find_quick_sort_time(arr): 
+    start_time = time.time()  # Start time measurement 
+ 
+    sorted_arr = quick_sort(arr)  # Perform quick sort 
+ 
+    end_time = time.time()  # End time measurement     elapsed_time = end_time - start_time 
+ 
+    return sorted_arr, elapsed_time 
+ 
+# Example usage example_list = [12, 11, 13, 5, 6, 7] 
+sorted_list, execution_time = find_quick_sort_time(example_list) 
+ 
+print(f"Sorted list: {sorted_list}") 
+print(f"Execution time: {execution_time:.10f} seconds") 
+OUTPUT:- 
+ 
+ 
+TIME COMPLEXITY:-O(n log n) 
+
+
+82. Binary search 
+ PROGRAM:
+:- import time 
+ 
+def binary_search(arr, x):     left, right = 0, len(arr) - 1     while left <= right: 
+        mid = left + (right - left) // 2         if arr[mid] == x:             return mid         elif arr[mid] < x:             left = mid + 1         else:             right = mid - 1     return -1 
+ 
+def find_binary_search_time(arr, x): 
+    start_time = time.time()  # Start time measurement 
+ 
+    index = binary_search(arr, x)  # Perform binary search 
+ 
+    end_time = time.time()  # End time measurement     elapsed_time = end_time - start_time 
+ 
+    return index, elapsed_time 
+ 
+# Example usage 
+example_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
+search_element = 7 
+index, execution_time = find_binary_search_time(example_list, search_element) 
+ 
+if index != -1: 
+    print(f"Element found at index: {index}") else: 
+    print("Element not found") 
+print(f"Execution time: {execution_time:.10f} seconds") 
+ 
+OUTPUT:- 
+ 
+ 
+TIME COMPLEXITY:-O( log n) 
+
+
+
+83. Strassens matrix multiplication
+   PROGRAM:
+   import numpy as np import time 
+ 
+def strassen_matrix_multiplication(A, B): 
+    n = len(A) 
+     
+    if n == 1: 
+        return A * B 
+ 
+    # Splitting matrices into quadrants 
+    mid = n // 2     A11 = A[:mid, :mid] 
+    A12 = A[:mid, mid:] 
+    A21 = A[mid:, :mid] 
+    A22 = A[mid:, mid:] 
+    B11 = B[:mid, :mid] 
+    B12 = B[:mid, mid:] 
+    B21 = B[mid:, :mid] 
+    B22 = B[mid:, mid:] 
+ 
+    # Computing the 7 products using Strassen's formulas 
+    M1 = strassen_matrix_multiplication(A11 + A22, B11 + B22) 
+    M2 = strassen_matrix_multiplication(A21 + A22, B11) 
+    M3 = strassen_matrix_multiplication(A11, B12 - B22) 
+    M4 = strassen_matrix_multiplication(A22, B21 - B11) 
+    M5 = strassen_matrix_multiplication(A11 + A12, B22) 
+    M6 = strassen_matrix_multiplication(A21 - A11, B11 + B12) 
+    M7 = strassen_matrix_multiplication(A12 - A22, B21 + B22) 
+ 
+    # Combining the results to get the final quadrants 
+    C11 = M1 + M4 - M5 + M7 
+    C12 = M3 + M5 
+    C21 = M2 + M4 
+    C22 = M1 - M2 + M3 + M6 
+ 
+    # Combining the quadrants into a single matrix 
+    C = np.vstack((np.hstack((C11, C12)), np.hstack((C21, C22)))) 
+ 
+    return C 
+ 
+def find_strassen_time(A, B): 
+    start_time = time.time()  # Start time measurement 
+ 
+    C = strassen_matrix_multiplication(A, B)  # Perform Strassen's matrix multiplication 
+ 
+    end_time = time.time()  # End time measurement     elapsed_time = end_time - start_time 
+ 
+    return C, elapsed_time 
+ 
+# Example usage 
+n = 4  # Size of the matrix (must be a power of 2) 
+A= np.random.randint(0, 10, (n, n)) 
+B= np.random.randint(0, 10, (n, n)) 
+ 
+result, execution_time = find_strassen_time(A, B) 
+ 
+print("Matrix A:") print(A) print("Matrix B:") print(B) 
+print("Result of Strassen's Matrix Multiplication:") print(result) 
+print(f"Execution time: {execution_time:.10f} seconds") 
+ 
+OUTPUT:- 
+  
+
+TIME COMPLEXITY:-O(n3) 
+
+84. Karatsuba algorithm for multiplication 
+PROGRAM:
+ :- import time 
+ def karatsuba(x, y):     # Base case for recursion     if x < 10 or y < 10:         return x * y 
+  # Calculate the size of the numbers     n = max(len(str(x)), len(str(y)))     m = n // 2 
+    # Split the digit sequences about the middle     high1, low1 = divmod(x, 10**m) 
+    high2, low2 = divmod(y, 10**m) 
+    # Perform 3 multiplications     z0 = karatsuba(low1, low2)     z1 = karatsuba((low1 + high1), (low2 + high2))     z2 = karatsuba(high1, high2) 
+    # Combine the results 
+    return (z2 * 10**(2*m)) + ((z1 - z2 - z0) * 10**m) + z0 
+def find_karatsuba_time(x, y): 
+    start_time = time.time()  # Start time measurement 
+    result = karatsuba(x, y)  # Perform Karatsuba multiplication 
+    end_time = time.time()  # End time measurement 
+    elapsed_time = end_time - start_time 
+    return result, elapsed_time 
+# Example usage x = 12345678901234567890 y = 98765432109876543210 
+result, execution_time = find_karatsuba_time(x, y) 
+print(f"Multiplication result: {result}") 
+print(f"Execution time: {execution_time:.10f} seconds") 
+ 
+OUTPUT:- 
+ 
+ 
+TIME COMPLEXITY:- O(n^log_2{3}) ≈ O(n^1.585) 
+
+
+
+
+85. Closest pair of points using divide and conquer 
+  PROGRAM:
+:- import math import time 
+ 
+def distance(point1, point2): 
+    return math.sqrt((point1[0] - point2[0])**2 + (point1[1] - point2[1])**2)  
+def closest_pair_dc(points):     def closest_pair_rec(points_sorted_x, points_sorted_y): 
+        n = len(points_sorted_x)         if n <= 3: 
+            return brute_force_closest_pair(points_sorted_x) 
+        mid = n // 2 
+        mid_point = points_sorted_x[mid] 
+        left_x = points_sorted_x[:mid] 
+        right_x = points_sorted_x[mid:] 
+        midpoint = points_sorted_x[mid][0]         left_y = list(filter(lambda x: x[0] <= midpoint, points_sorted_y))         right_y = list(filter(lambda x: x[0] > midpoint, points_sorted_y)) 
+        (p1_left, p2_left, dist_left) = closest_pair_rec(left_x, left_y) 
+        (p1_right, p2_right, dist_right) = closest_pair_rec(right_x, right_y) 
+        if dist_left < dist_right:             min_dist = dist_left             min_pair = (p1_left, p2_left)         else: 
+            min_dist = dist_right 
+            min_pair = (p1_right, p2_right) 
+        (p3, p4, dist_split) = closest_split_pair(points_sorted_x, points_sorted_y, min_dist, min_pair) 
+        if min_dist <= dist_split: 
+            return min_pair[0], min_pair[1], min_dist         else: 
+            return p3, p4, dist_split 
+    def brute_force_closest_pair(points): 
+        min_dist = float('inf')         p1, p2 = None, None         n = len(points)         for i in range(n):             for j in range(i + 1, n):                 d = distance(points[i], points[j])                 if d < min_dist:                     min_dist = d 
+                    p1, p2 = points[i], points[j]         return p1, p2, min_dist 
+ 
+ def closest_split_pair(points_sorted_x, points_sorted_y, delta, best_pair):         n = len(points_sorted_x) 
+        mid_x = points_sorted_x[n // 2][0] 
+        sy = [p for p in points_sorted_y if mid_x - delta <= p[0] <= mid_x + delta] 
+        best = delta         ln_sy = len(sy)         for i in range(ln_sy - 1):             for j in range(i + 1, min(i + 7, ln_sy)): 
+                p, q = sy[i], sy[j]                 dst = distance(p, q)                 if dst < best:                     best_pair = (p, q) 
+                    best = dst 
+       return best_pair[0], best_pair[1], best 
+    points_sorted_x = sorted(points, key=lambda x: x[0])     points_sorted_y = sorted(points, key=lambda x: x[1]) 
+    return closest_pair_rec(points_sorted_x, points_sorted_y) 
+def find_closest_pair_time(points): 
+    start_time = time.time()  # Start time measurement 
+    result = closest_pair_dc(points)  # Perform closest pair of points 
+    end_time = time.time()  # End time measurement     elapsed_time = end_time - start_time 
+    return result, elapsed_time  
+# Example usage 
+points = [(2, 3), (12, 30), (40, 50), (5, 1), (12, 10), (3, 4)] 
+result, execution_time = find_closest_pair_time(points) 
+print(f"Closest pair of points: {result[0]} and {result[1]}") print(f"Distance: {result[2]}") 
+print(f"Execution time: {execution_time:.10f} seconds") 
+ 
+OUTPUT:- 
+ 
+ TIME COMPLEXITY:- O(nlogn) 
+86. Median of medians
+PROGRAM:
+import time 
+ 
+def partition(arr, low, high, pivot_index): 
+    pivot_value = arr[pivot_index] 
+    arr[pivot_index], arr[high] = arr[high], arr[pivot_index]     store_index = low     for i in range(low, high):         if arr[i] < pivot_value:             arr[store_index], arr[i] = arr[i], arr[store_index]             store_index += 1 
+    arr[store_index], arr[high] = arr[high], arr[store_index]     return store_index 
+ 
+def select(arr, low, high, k):     if low == high:         return arr[low] 
+ 
+    pivot_index = median_of_medians(arr, low, high) 
+    pivot_index = partition(arr, low, high, pivot_index) 
+ 
+    if k == pivot_index:         return arr[k]     elif k < pivot_index:         return select(arr, low, pivot_index - 1, k)     else: 
+        return select(arr, pivot_index + 1, high, k) 
+ 
+def median_of_medians(arr, low, high): 
+    n = high - low + 1     if n < 10: 
+        return partition5(arr, low, high) 
+ 
+    medians = []     for i in range(low, high + 1, 5): 
+        sub_right = i + 4         if sub_right > high:             sub_right = high         median5 = partition5(arr, i, sub_right) 
+        medians.append(arr[median5]) 
+ 
+    return select(medians, 0, len(medians) - 1, len(medians) // 2) 
+ 
+def partition5(arr, low, high):     sublist = arr[low:high + 1]     sublist.sort()     mid = (len(sublist) - 1) // 2     median = sublist[mid] 
+    median_index = arr.index(median, low, high + 1)     return median_index 
+ 
+def find_kth_smallest(arr, k): 
+    return select(arr, 0, len(arr) - 1, k - 1) 
+ 
+def find_median_of_medians_time(arr): 
+    start_time = time.time()  # Start time measurement 
+ 
+    n = len(arr)     if n % 2 == 1: 
+        median = find_kth_smallest(arr, n // 2 + 1)     else: 
+        left = find_kth_smallest(arr, n // 2)         right = find_kth_smallest(arr, n // 2 + 1)         median = (left + right) / 2 
+ 
+    end_time = time.time()  # End time measurement     elapsed_time = end_time - start_time 
+ 
+    return median, elapsed_time 
+ 
+# Example usage 
+arr = [3, 2, 9, 1, 7, 6, 8, 5, 4] 
+median, execution_time = find_median_of_medians_time(arr) 
+ 
+print(f"Median: {median}") 
+print(f"Execution time: {execution_time:.10f} seconds") 
+ 
+OUTPUT:- 
+ 
+ 
+TIME COMPLEXITY:-o(n) 
+
+
+
+87. Meet in middle technique 
+PROGRAM:
+import itertools import time  
+def meet_in_the_middle(numbers, target):     # Divide the list into two halves     mid = len(numbers) // 2     left_half = numbers[:mid] 
+    right_half = numbers[mid:]
+    # Generate all subset sums for each half 
+    left_sums = set(sum(subset) for i in range(len(left_half) + 1) for subset in itertools.combinations(left_half, i)) 
+    right_sums = set(sum(subset) for i in range(len(right_half) + 1) for subset in itertools.combinations(right_half, i))
+    # Check if there is a combination of sums from left and right halves that equals the target     for l_sum in left_sums:         if (target - l_sum) in right_sums: 
+          return True
+    return False
+def find_meet_in_the_middle_time(numbers, target):     start_time = time.time()  # Start time measurement 
+    result = meet_in_the_middle(numbers, target)  # Perform the meet-in-the-middle technique 
+    end_time = time.time()  # End time measurement     elapsed_time = end_time - start_time 
+    return result, elapsed_time  
+# Example usage numbers = [3, 34, 4, 12, 5, 2] target = 9 
+result, execution_time = find_meet_in_the_middle_time(numbers, target)  
+print(f"Subset sum to {target}: {result}") 
+print(f"Execution time: {execution_time:.10f} seconds") 
+OUTPUT:- 
+ 
+TIME COMPLEXITY:- O(2^(n/2) * n) 
+ 
+
+
+
+
+
+ 
